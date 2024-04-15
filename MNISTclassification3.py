@@ -4,6 +4,7 @@
 Created on Sat Feb  3 12:54:33 2024
 
 @author: mehdy
+completed by Francis
 """
 
 import matplotlib.pyplot as plt
@@ -35,18 +36,18 @@ X_test = X_test / maximum #  Normalize X_test based on the maximum value of X_tr
 Noise = [str(index) for index in np.random.choice(10,20000, p =[0.25,0.05,0.05,0.05,0.08,0.17,0.13,0.1,0.12,0.00])]
 y_train[:20000] = Noise
 
-# from sklearn.neighbors import KNeighborsClassifier
-# R_train_KNN = []
-# R_test_KNN = []
-# Neighbours = np.arange(1,100,5)
-# for k in Neighbours:
-#   print(f'Analyzing KNN with k={k}...')
-#   model = KNeighborsClassifier(n_neighbors = k, weights='distance', metric='euclidean')  # define KNN model
-#   model.fit(X_train, y_train)  # fit the data
-#   y_res_train = model.predict(X_train) # Output for training set
-#   y_res_test = model.predict(X_test) # Output for test set
-#   R_train_KNN.append(sklearn.metrics.accuracy_score(y_train, y_res_train))
-#   R_test_KNN.append(sklearn.metrics.accuracy_score(y_test, y_res_test))
+from sklearn.neighbors import KNeighborsClassifier
+R_train_KNN = []
+R_test_KNN = []
+Neighbours = np.arange(1,100,5)
+for k in Neighbours:
+  print(f'Analyzing KNN with k={k}...')
+  model = KNeighborsClassifier(n_neighbors = k, weights='distance', metric='euclidean')  # define KNN model
+  model.fit(X_train, y_train)  # fit the data
+  y_res_train = model.predict(X_train) # Output for training set
+  y_res_test = model.predict(X_test) # Output for test set
+  R_train_KNN.append(sklearn.metrics.accuracy_score(y_train, y_res_train))
+  R_test_KNN.append(sklearn.metrics.accuracy_score(y_test, y_res_test))
 
 
 from sklearn.ensemble import RandomForestClassifier
@@ -62,17 +63,17 @@ for s in Min_sample:
   R_train_RF.append(sklearn.metrics.accuracy_score(y_train, y_res_train))
   R_test_RF.append(sklearn.metrics.accuracy_score(y_test, y_res_test))
 
-# plt.figure(figsize=(10, 6))
-# plt.plot(Neighbours, R_train_KNN, label='Training Accuracy')
-# plt.plot(Neighbours, R_test_KNN, label='Test Accuracy')
-# plt.xlabel('Number of Neighbors k')
-# plt.ylabel('Accuracy')
-# plt.title('KNN Training and Test Accuracy by Number of Neighbors')
-# plt.legend()
-# best_k_index = np.argmax(R_test_KNN)
-# best_k = Neighbours[best_k_index]
-# print(f"Best k: {best_k} with Test Accuracy: {R_test_KNN[best_k_index]:.4f}")
-# plt.show()
+plt.figure(figsize=(10, 6))
+plt.plot(Neighbours, R_train_KNN, label='Training Accuracy')
+plt.plot(Neighbours, R_test_KNN, label='Test Accuracy')
+plt.xlabel('Number of Neighbors k')
+plt.ylabel('Accuracy')
+plt.title('KNN Training and Test Accuracy by Number of Neighbors')
+plt.legend()
+best_k_index = np.argmax(R_test_KNN)
+best_k = Neighbours[best_k_index]
+print(f"Best k: {best_k} with Test Accuracy: {R_test_KNN[best_k_index]:.4f}")
+plt.show()
   
 
 
